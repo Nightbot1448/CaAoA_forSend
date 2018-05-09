@@ -1,29 +1,38 @@
-PATH=src/
+SRC_PATH = ./src/
+TEST_PATH = ./test/
 
-all: step1 step2 test
-	
-step1 : kmp.o step1.o
-	g++ step1.o kmp.o -o step1 	
+all: kmpAlgorythm checkCyclicShift tests
 
-step2 : kmp.o step2.o
-	g++ step2.o kmp.o -o step2 
+kmpAlgorythm : basicFunc.o kmpAlgorythm.o
+	g++ kmpAlgorythm.o basicFunc.o -o kmpAlgorythm -std=c++11 -Wall
 
-test : kmp.o tests.o
-	g++ tests.o kmp.o -o tests
+checkCyclicShift : basicFunc.o checkCyclicShift.o
+	g++ checkCyclicShift.o basicFunc.o -o checkCyclicShift -std=c++11 -Wall
 
-step1.o: $(PATH)step1.cpp
-	g++ -c $(PATH)step1.cpp 
+tests : basicFunc.o tests.o
+	g++ tests.o basicFunc.o -o tests -std=c++11 -Wall
 
-kmp.o: $(PATH)kmp.cpp
-	@echo "$(PATH)"
-	g++ -c $(PATH)kmp.cpp -std=c++11 
+compare: basicFunc.o cmpNaive_KMP.o
+	g++ basicFunc.o cmpNaive_KMP.o -o compare -std=c++11 -Wall
+
+cmpNaive_KMP.o : $(TEST_PATH)cmpNaive_KMP.cpp
+	g++ -c $(TEST_PATH)cmpNaive_KMP.cpp -std=c++11 -Wall
+
+kmpAlgorythm.o: $(SRC_PATH)kmpAlgorythm.cpp
+	g++ -c $(SRC_PATH)kmpAlgorythm.cpp -std=c++11 -Wall
+
+basicFunc.o: $(SRC_PATH)basicFunc.cpp 
+	g++ -c $(SRC_PATH)basicFunc.cpp -std=c++11 -Wall
 
 
-step2.o: $(PATH)step2.cpp
-	g++ -c -std=c++11 $(PATH)step2.cpp
+checkCyclicShift.o: $(SRC_PATH)checkCyclicShift.cpp
+	g++ -c $(SRC_PATH)checkCyclicShift.cpp -std=c++11 -Wall
 
-test.o: ./test/tests.cpp
-	g++ -c -std=c++11 ./test/tests.cpp
+tests.o: $(TEST_PATH)tests.cpp
+	g++ -c $(TEST_PATH)tests.cpp -std=c++11 -Wall
 
 clean:
-	rm -rf *.o
+	rm -rf $(wildcard *.o)
+
+cleanAll: clean
+	rm -rf kmpAlgorythm checkCyclicShift tests compare

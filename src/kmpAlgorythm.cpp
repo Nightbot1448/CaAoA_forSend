@@ -1,5 +1,5 @@
 #include <iostream>	
-#include "../hdr/kmp.h"
+#include "../hdr/basicFunc.h"
 
 void print(const std::vector<int>& index){ //print result
 	for(const auto& it: index){
@@ -9,18 +9,20 @@ void print(const std::vector<int>& index){ //print result
 	}
 	std::cout << std::endl;
 }
-
-int main(){
-	std::string text, _template;
+	
+int main()
+{
+	std::string _template, text;
 	std::cout<<"Template:" << std::endl;
 	std::cin>>_template;
 	std::cout<<"Text:" << std::endl;
 	std::cin>>text;
-	if(_template.size() < 15000 && text.size()<5000000){
+	if(_template.size() < 15000 && text.size()<5000000)
+	{
 		std::vector<int> pi=prefix(_template);
-		std::vector<int> index=kmp(text,_template,pi);
-		if(index.size()){
-			print(index);
+		auto kmp_res = kmp(text,_template	,pi);
+		if(kmp_res.first.size()){
+			print(kmp_res.first);
 		}
 		else
 			std::cout << "-1" << std::endl;
