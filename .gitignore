@@ -1,5 +1,5 @@
 *.o
 checkCyclicShift
-kmpAlgotythm
+kmpAlgorythm
 tests
 compare

@@ -18,8 +18,8 @@ void test(size_t text_min, size_t text_size, size_t temp_min, size_t temp_size)
 			temp_len = rand() % temp_size+temp_min;
 			std::string _template = gen_random_string(temp_len);
 			std::vector<int> pi=prefix(_template);
-			auto naive_res = naiveAlgorithm(text, _template);
-			auto kmp_res = kmp(text, _template, pi);
+			std::pair<std::vector<int>, size_t> naive_res = naiveAlgorithm(text, _template);
+			std::pair<std::vector<int>, size_t> kmp_res = kmp(text, _template, pi);
 			if (kmp_res.second < naive_res.second)
 				count++;
 		}	
